@@ -1,0 +1,1307 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="theme-color" content="#0A3D6B">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>แบบสอบถามความพึงพอใจ – Home Phototherapy</title>
+<style>
+  :root {
+    --navy: #0A3D6B;
+    --navy-mid: #1A5FA0;
+    --navy-light: #2E82CC;
+    --sky: #E8F4FD;
+    --sky-mid: #C8E4F8;
+    --gold: #F5A623;
+    --gold-light: #FEF3DC;
+    --teal: #00897B;
+    --teal-light: #E0F2F1;
+    --white: #FFFFFF;
+    --gray-50: #F8FAFC;
+    --gray-100: #F1F5F9;
+    --gray-200: #E2E8F0;
+    --gray-400: #94A3B8;
+    --gray-600: #475569;
+    --gray-800: #1E293B;
+    --red: #DC2626;
+    --green: #16A34A;
+    --r1: #EF4444; --r2: #F97316; --r3: #EAB308; --r4: #22C55E; --r5: #0EA5E9;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,.08);
+    --shadow-md: 0 4px 16px rgba(10,61,107,.12);
+    --shadow-lg: 0 8px 32px rgba(10,61,107,.16);
+    --radius: 16px;
+    --radius-sm: 10px;
+    --font: 'Sarabun', 'Noto Sans Thai', sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: var(--font);
+    background: var(--gray-50);
+    color: var(--gray-800);
+    min-height: 100vh;
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  /* ── FONT ── */
+  @import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap');
+
+  /* ── HEADER ── */
+  .app-header {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%);
+    color: var(--white);
+    padding: 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: var(--shadow-md);
+  }
+  .header-inner {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .header-logo {
+    width: 40px;
+    height: 40px;
+    background: rgba(255,255,255,.15);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 20px;
+  }
+  .header-text { flex: 1; min-width: 0; }
+  .header-title { font-size: 15px; font-weight: 700; line-height: 1.2; }
+  .header-sub { font-size: 12px; opacity: .75; margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+  /* ── PROGRESS ── */
+  .progress-bar-wrap {
+    background: rgba(255,255,255,.15);
+    height: 4px;
+  }
+  .progress-bar-fill {
+    background: var(--gold);
+    height: 4px;
+    transition: width .4s ease;
+    border-radius: 0 2px 2px 0;
+  }
+
+  /* ── MAIN ── */
+  .main { max-width: 680px; margin: 0 auto; padding: 20px 16px 100px; }
+
+  /* ── STEP INDICATOR ── */
+  .step-indicator {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 20px;
+    overflow-x: auto;
+    padding: 4px 0;
+    scrollbar-width: none;
+  }
+  .step-indicator::-webkit-scrollbar { display: none; }
+  .step-dot {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    flex-shrink: 0;
+    transition: all .3s;
+    border: 2px solid var(--gray-200);
+    background: var(--white);
+    color: var(--gray-400);
+  }
+  .step-dot.active {
+    background: var(--navy);
+    border-color: var(--navy);
+    color: var(--white);
+    box-shadow: 0 0 0 4px rgba(10,61,107,.15);
+  }
+  .step-dot.done {
+    background: var(--teal);
+    border-color: var(--teal);
+    color: var(--white);
+  }
+  .step-line {
+    flex: 1;
+    height: 2px;
+    background: var(--gray-200);
+    min-width: 12px;
+    transition: background .3s;
+  }
+  .step-line.done { background: var(--teal); }
+
+  /* ── CARD ── */
+  .card {
+    background: var(--white);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--gray-200);
+    overflow: hidden;
+    margin-bottom: 16px;
+    animation: slideUp .3s ease;
+  }
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .card-header {
+    background: var(--sky);
+    border-bottom: 1px solid var(--sky-mid);
+    padding: 14px 18px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .card-header-icon {
+    width: 34px;
+    height: 34px;
+    background: var(--navy);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+  .card-header-title { font-size: 15px; font-weight: 700; color: var(--navy); }
+  .card-header-sub { font-size: 12px; color: var(--gray-600); margin-top: 1px; }
+  .card-body { padding: 16px 18px; }
+
+  /* ── INFO PAGE ── */
+  .info-hero {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 60%, var(--navy-light) 100%);
+    border-radius: var(--radius);
+    color: var(--white);
+    padding: 28px 24px;
+    margin-bottom: 16px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .info-hero::before {
+    content: '';
+    position: absolute;
+    top: -30px; right: -30px;
+    width: 120px; height: 120px;
+    background: rgba(255,255,255,.06);
+    border-radius: 50%;
+  }
+  .info-hero-icon { font-size: 48px; margin-bottom: 12px; }
+  .info-hero-title { font-size: 22px; font-weight: 700; margin-bottom: 6px; }
+  .info-hero-sub { font-size: 14px; opacity: .85; line-height: 1.5; }
+  .info-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--gold);
+    color: var(--navy);
+    font-size: 12px;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-top: 12px;
+  }
+  .info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+  .info-item {
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-sm);
+    padding: 14px;
+    text-align: center;
+  }
+  .info-item-num { font-size: 26px; font-weight: 700; color: var(--navy); line-height: 1; }
+  .info-item-label { font-size: 12px; color: var(--gray-600); margin-top: 4px; }
+  .privacy-box {
+    background: var(--teal-light);
+    border: 1px solid #B2DFDB;
+    border-radius: var(--radius-sm);
+    padding: 12px 16px;
+    font-size: 13px;
+    color: #004D40;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    margin-bottom: 20px;
+  }
+
+  /* ── FORM FIELDS ── */
+  .field-group { margin-bottom: 16px; }
+  .field-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--gray-800);
+    margin-bottom: 8px;
+    display: block;
+  }
+  .field-label .req { color: var(--red); margin-left: 3px; }
+  .field-input {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1.5px solid var(--gray-200);
+    border-radius: var(--radius-sm);
+    font-family: var(--font);
+    font-size: 15px;
+    color: var(--gray-800);
+    background: var(--white);
+    outline: none;
+    transition: border-color .2s;
+    -webkit-appearance: none;
+  }
+  .field-input:focus { border-color: var(--navy-light); box-shadow: 0 0 0 3px rgba(46,130,204,.1); }
+  .field-input.error { border-color: var(--red); }
+
+  .radio-group { display: flex; gap: 8px; flex-wrap: wrap; }
+  .radio-btn {
+    flex: 1;
+    min-width: 80px;
+    padding: 10px 8px;
+    border: 1.5px solid var(--gray-200);
+    border-radius: var(--radius-sm);
+    text-align: center;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all .2s;
+    background: var(--white);
+    color: var(--gray-600);
+    user-select: none;
+  }
+  .radio-btn:hover { border-color: var(--navy-light); background: var(--sky); }
+  .radio-btn.selected { border-color: var(--navy); background: var(--sky); color: var(--navy); font-weight: 700; }
+
+  /* ── LIKERT SCALE ── */
+  .question-block {
+    border-bottom: 1px solid var(--gray-100);
+    padding: 16px 0;
+  }
+  .question-block:last-child { border-bottom: none; padding-bottom: 0; }
+  .question-text {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--gray-800);
+    margin-bottom: 12px;
+    line-height: 1.5;
+  }
+  .question-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px; height: 22px;
+    background: var(--navy);
+    color: var(--white);
+    border-radius: 50%;
+    font-size: 11px;
+    font-weight: 700;
+    margin-right: 6px;
+    flex-shrink: 0;
+    vertical-align: middle;
+  }
+  .likert-row {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
+  }
+  .likert-btn {
+    aspect-ratio: 1;
+    border-radius: 50%;
+    border: 2px solid var(--gray-200);
+    background: var(--white);
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--gray-400);
+    transition: all .2s;
+    user-select: none;
+    padding: 6px 2px;
+    min-height: 52px;
+  }
+  .likert-btn:hover { transform: scale(1.05); }
+  .likert-btn .l-num { font-size: 16px; font-weight: 800; }
+  .likert-btn .l-txt { font-size: 9px; font-weight: 500; line-height: 1.1; text-align: center; }
+  .likert-btn.s1 { border-color: var(--r1); }
+  .likert-btn.s1.sel { background: var(--r1); border-color: var(--r1); color: white; transform: scale(1.1); box-shadow: 0 4px 12px rgba(239,68,68,.35); }
+  .likert-btn.s2 { border-color: var(--r2); }
+  .likert-btn.s2.sel { background: var(--r2); border-color: var(--r2); color: white; transform: scale(1.1); box-shadow: 0 4px 12px rgba(249,115,22,.35); }
+  .likert-btn.s3 { border-color: var(--r3); }
+  .likert-btn.s3.sel { background: var(--r3); border-color: var(--r3); color: var(--gray-800); transform: scale(1.1); box-shadow: 0 4px 12px rgba(234,179,8,.35); }
+  .likert-btn.s4 { border-color: var(--r4); }
+  .likert-btn.s4.sel { background: var(--r4); border-color: var(--r4); color: white; transform: scale(1.1); box-shadow: 0 4px 12px rgba(34,197,94,.35); }
+  .likert-btn.s5 { border-color: var(--r5); }
+  .likert-btn.s5.sel { background: var(--r5); border-color: var(--r5); color: white; transform: scale(1.1); box-shadow: 0 4px 12px rgba(14,165,233,.35); }
+
+  .likert-labels {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 4px;
+    font-size: 10px;
+    color: var(--gray-400);
+    padding: 0 2px;
+  }
+  .unanswered .likert-btn { border-color: #FCA5A5; animation: pulse 1s ease 2; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.5} }
+
+  /* ── NPS ── */
+  .nps-row {
+    display: grid;
+    grid-template-columns: repeat(11, 1fr);
+    gap: 4px;
+    margin-top: 8px;
+  }
+  .nps-btn {
+    aspect-ratio: 1;
+    border-radius: 8px;
+    border: 2px solid var(--gray-200);
+    background: var(--white);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--gray-400);
+    transition: all .2s;
+    user-select: none;
+  }
+  .nps-btn:hover { border-color: var(--navy-light); background: var(--sky); }
+  .nps-btn.nps-low.sel { background: var(--r1); border-color: var(--r1); color: white; }
+  .nps-btn.nps-mid.sel { background: var(--r3); border-color: var(--r3); color: var(--gray-800); }
+  .nps-btn.nps-high.sel { background: var(--r5); border-color: var(--r5); color: white; }
+  .nps-labels { display: flex; justify-content: space-between; font-size: 11px; color: var(--gray-400); margin-top: 6px; }
+
+  /* ── TEXTAREA ── */
+  textarea.field-input {
+    min-height: 90px;
+    resize: vertical;
+    font-size: 15px;
+  }
+
+  /* ── NAV BUTTONS ── */
+  .nav-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0; right: 0;
+    background: var(--white);
+    border-top: 1px solid var(--gray-200);
+    padding: 12px 16px;
+    z-index: 100;
+    box-shadow: 0 -4px 16px rgba(0,0,0,.08);
+  }
+  .nav-inner {
+    max-width: 680px;
+    margin: 0 auto;
+    display: flex;
+    gap: 10px;
+  }
+  .btn {
+    flex: 1;
+    padding: 14px 20px;
+    border-radius: var(--radius-sm);
+    font-family: var(--font);
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    border: none;
+    transition: all .2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+  .btn-primary { background: var(--navy); color: var(--white); }
+  .btn-primary:hover { background: var(--navy-mid); }
+  .btn-primary:active { transform: scale(.98); }
+  .btn-secondary { background: var(--gray-100); color: var(--gray-600); flex: 0.6; }
+  .btn-secondary:hover { background: var(--gray-200); }
+  .btn-submit { background: linear-gradient(135deg, var(--teal) 0%, #00695C 100%); color: white; }
+  .btn-submit:hover { box-shadow: 0 4px 16px rgba(0,137,123,.4); }
+  .btn-submit:disabled { opacity: .5; cursor: not-allowed; }
+
+  /* ── SETTINGS ── */
+  .settings-banner {
+    background: var(--gold-light);
+    border: 1px solid #F5A623;
+    border-radius: var(--radius-sm);
+    padding: 12px 16px;
+    font-size: 13px;
+    color: #7C4A00;
+    margin-bottom: 16px;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+
+  /* ── SUCCESS ── */
+  .success-screen {
+    text-align: center;
+    padding: 40px 20px;
+    animation: slideUp .4s ease;
+  }
+  .success-icon { font-size: 72px; margin-bottom: 16px; }
+  .success-title { font-size: 24px; font-weight: 700; color: var(--teal); margin-bottom: 8px; }
+  .success-sub { font-size: 15px; color: var(--gray-600); line-height: 1.6; }
+  .success-ref {
+    margin-top: 20px;
+    background: var(--gray-100);
+    border-radius: var(--radius-sm);
+    padding: 12px 16px;
+    font-size: 13px;
+    color: var(--gray-600);
+  }
+  .btn-restart {
+    margin-top: 24px;
+    background: var(--navy);
+    color: white;
+    padding: 14px 32px;
+    border-radius: var(--radius-sm);
+    border: none;
+    font-family: var(--font);
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    width: 100%;
+  }
+
+  /* ── LOADING ── */
+  .spinner {
+    width: 20px; height: 20px;
+    border: 3px solid rgba(255,255,255,.3);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin .7s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ── CONFIG MODAL ── */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.5);
+    z-index: 200;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding: 0;
+  }
+  .modal-sheet {
+    background: var(--white);
+    border-radius: 20px 20px 0 0;
+    padding: 24px 20px 36px;
+    width: 100%;
+    max-width: 680px;
+    max-height: 85vh;
+    overflow-y: auto;
+    animation: sheetUp .3s ease;
+  }
+  @keyframes sheetUp { from{transform:translateY(100%)} to{transform:translateY(0)} }
+  .modal-handle {
+    width: 40px; height: 4px;
+    background: var(--gray-200);
+    border-radius: 2px;
+    margin: 0 auto 20px;
+  }
+  .modal-title { font-size: 18px; font-weight: 700; color: var(--navy); margin-bottom: 16px; }
+
+  /* ── ERROR BANNER ── */
+  .error-banner {
+    background: #FEF2F2;
+    border: 1px solid #FCA5A5;
+    border-radius: var(--radius-sm);
+    padding: 12px 16px;
+    font-size: 13px;
+    color: var(--red);
+    margin-bottom: 12px;
+    display: flex;
+    gap: 8px;
+  }
+
+  @media (max-width: 400px) {
+    .info-grid { grid-template-columns: 1fr 1fr; }
+    .likert-btn { min-height: 46px; }
+    .likert-btn .l-num { font-size: 14px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="app-header">
+  <div class="header-inner">
+    <div class="header-logo">🌟</div>
+    <div class="header-text">
+      <div class="header-title">แบบสอบถามความพึงพอใจ</div>
+      <div class="header-sub">Home Phototherapy · โรงพยาบาลรามาธิบดีจักรีนฤบดินทร์</div>
+    </div>
+    <button onclick="openConfig()" style="background:rgba(255,255,255,.15);border:none;border-radius:8px;padding:8px 10px;color:white;cursor:pointer;font-size:18px;" title="ตั้งค่า">⚙️</button>
+  </div>
+  <div class="progress-bar-wrap">
+    <div class="progress-bar-fill" id="progressBar" style="width:0%"></div>
+  </div>
+</header>
+
+<main class="main" id="mainContent"></main>
+
+<div class="nav-bar" id="navBar">
+  <div class="nav-inner" id="navInner"></div>
+</div>
+
+<!-- Config Modal -->
+<div class="modal-overlay" id="configModal" style="display:none" onclick="if(event.target===this)closeConfig()">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
+    <div class="modal-title">⚙️ ตั้งค่าการเชื่อมต่อ Google Sheets</div>
+    <div class="field-group">
+      <label class="field-label">Google Apps Script Web App URL <span class="req">*</span></label>
+      <input type="url" class="field-input" id="scriptUrlInput"
+        placeholder="https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec"
+        value="">
+      <div style="font-size:12px;color:var(--gray-400);margin-top:6px;">วาง URL จาก Google Apps Script → Deploy → Web app</div>
+    </div>
+    <div class="settings-banner">
+      <span>📋</span>
+      <div>
+        <strong>วิธีตั้งค่า Google Sheets:</strong><br>
+        1. สร้าง Google Sheet ใหม่<br>
+        2. เปิด Apps Script (Extensions → Apps Script)<br>
+        3. วาง code ตาม README ด้านล่าง<br>
+        4. Deploy → New deployment → Web app (Execute as: Me, Who has access: Anyone)<br>
+        5. คัดลอก URL มาวางข้างบน
+      </div>
+    </div>
+    <div class="field-group">
+      <label class="field-label">Apps Script Code ที่ต้องใช้</label>
+      <textarea class="field-input" rows="18" readonly style="font-family:monospace;font-size:11px;background:var(--gray-50);">function getOrCreateSheet() {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var sheet = ss.getSheetByName("Survey");
+  if (!sheet) sheet = ss.insertSheet("Survey");
+  if (sheet.getLastRow() === 0) {
+    sheet.appendRow([
+      "Timestamp","RefNo","Date","Relation","BabyAge","PTDays",
+      "Q1","Q2","Q3","Q4","Q5","Q6","Q7","Q8","Q9","Q10","Q11","Q12",
+      "Q13","Q14","Q15","Q16","Q17","Q18","Q19","Q20","Q21","Q22","Q23","Q24",
+      "NPS","GoodComment","ImprovComment","AvgScore"
+    ]);
+  }
+  return sheet;
+}
+
+function appendData(d) {
+  var sheet = getOrCreateSheet();
+  sheet.appendRow([
+    new Date(), d.refNo, d.date, d.relation, d.babyAge, d.ptDays,
+    d.q1,  d.q2,  d.q3,  d.q4,  d.q5,  d.q6,
+    d.q7,  d.q8,  d.q9,  d.q10, d.q11, d.q12,
+    d.q13, d.q14, d.q15, d.q16, d.q17, d.q18,
+    d.q19, d.q20, d.q21, d.q22, d.q23, d.q24,
+    d.nps, d.goodComment, d.improveComment, d.avgScore
+  ]);
+}
+
+function doPost(e) {
+  try {
+    appendData(e.parameter);
+    return ContentService
+      .createTextOutput(JSON.stringify({ success: true }))
+      .setMimeType(ContentService.MimeType.JSON);
+  } catch(err) {
+    return ContentService
+      .createTextOutput(JSON.stringify({ success: false, error: err.toString() }))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+}
+
+function doGet(e) {
+  try {
+    var d = e.parameter;
+    if (!d.refNo) {
+      return ContentService.createTextOutput("HomePT Survey - OK")
+        .setMimeType(ContentService.MimeType.TEXT);
+    }
+    appendData(d);
+    return ContentService
+      .createTextOutput(JSON.stringify({ success: true }))
+      .setMimeType(ContentService.MimeType.JSON);
+  } catch(err) {
+    return ContentService
+      .createTextOutput(JSON.stringify({ success: false, error: err.toString() }))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+}</textarea>
+    </div>
+    <button class="btn btn-primary" onclick="saveConfig()" style="width:100%">บันทึก URL</button>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════════════════
+// DATA
+// ═══════════════════════════════════════════════════════════════════════════
+const LIKERT_LABELS = ['ไม่พอใจ','ควรปรับปรุง','พอใช้','ดี','ดีมาก'];
+const LIKERT_EMOJI  = ['😞','😐','😊','😄','🌟'];
+
+const SECTIONS = [
+  {
+    id: 'info',
+    title: 'ข้อมูลผู้ตอบแบบสอบถาม',
+    icon: '📋',
+    type: 'info'
+  },
+  {
+    id: 's1',
+    title: 'กระบวนการเข้าร่วมโปรแกรม',
+    icon: '🏥',
+    questions: [
+      'ได้รับข้อมูลเกี่ยวกับโปรแกรมสองไฟที่บ้านอย่างชัดเจน เข้าใจง่าย',
+      'แพทย์อธิบายข้อดี ความเสี่ยง และทางเลือกอื่นอย่างครบถ้วนก่อนลงนามยินยอม',
+      'กระบวนการเตรียมเอกสารและชำระค่าประกันอุปกรณ์สะดวก ไม่ซับซ้อน',
+      'รู้สึกมีส่วนร่วมในการตัดสินใจเลือกการรักษาที่บ้าน (Shared decision)',
+    ],
+    qStart: 1
+  },
+  {
+    id: 's2',
+    title: 'การให้ความรู้และสาธิตก่อนกลับบ้าน',
+    icon: '💡',
+    questions: [
+      'พยาบาลสอนวิธีใช้เครื่องสองไฟ (B\'bloo/Bilisoft) อย่างชัดเจน สาธิตได้เข้าใจ',
+      'แผ่นพับ PI-CNICU-025 มีเนื้อหาครบถ้วน ภาษาอ่านง่าย ภาพประกอบชัดเจน',
+      'วิดีโอสาธิตผ่าน QR Code ช่วยให้เข้าใจการใช้อุปกรณ์ได้ดียิ่งขึ้น',
+      'หลังจากรับการสอน รู้สึกมั่นใจในการดูแลบุตรขณะสองไฟที่บ้านด้วยตนเอง',
+      'พยาบาลให้เวลาฝึกปฏิบัติและตอบคำถามได้อย่างเพียงพอ',
+    ],
+    qStart: 5
+  },
+  {
+    id: 's3',
+    title: 'การติดตามผลผ่าน Video Call',
+    icon: '📱',
+    questions: [
+      'พยาบาลโทรติดตามผ่าน Video Call ตรงเวลาตามที่นัดหมาย',
+      'พยาบาลประเมินอาการบุตรและให้คำแนะนำได้ชัดเจนระหว่าง Video Call',
+      'การใช้งาน Line application เพื่อติดต่อทีมพยาบาลทำได้ง่ายและสะดวก',
+      'เมื่อติดต่อสอบถามนอกเวลานัด ได้รับการตอบกลับอย่างรวดเร็ว (<30 นาที)',
+      'รู้สึกปลอดภัยและไม่วิตกกังวล เพราะมีทีมพยาบาลติดตามดูแลอย่างต่อเนื่อง',
+    ],
+    qStart: 10
+  },
+  {
+    id: 's4',
+    title: 'การเยี่ยมบ้านโดยพยาบาล',
+    icon: '🏠',
+    questions: [
+      'พยาบาลเยี่ยมบ้านมาตรงเวลา แจ้งล่วงหน้าอย่างเหมาะสม',
+      'พยาบาลตรวจร่างกายบุตรและอธิบายผลการตรวจเลือดให้เข้าใจ',
+      'พยาบาลตอบคำถามและให้คำแนะนำด้วยความเต็มใจ เป็นมิตร ไม่เร่งรีบ',
+      'พยาบาลเจาะเลือดบุตรอย่างระมัดระวัง ช่วยลดความเจ็บปวดของบุตร',
+    ],
+    qStart: 15
+  },
+  {
+    id: 's5',
+    title: 'ผลการรักษาและความพึงพอใจโดยรวม',
+    icon: '⭐',
+    questions: [
+      'พึงพอใจกับผลการรักษา (ระดับตัวเหลืองลดลงตามที่คาดหวัง)',
+      'การสองไฟที่บ้านสะดวกกว่าการนอนโรงพยาบาล',
+      'รู้สึกว่าสายสัมพันธ์กับบุตรดีขึ้น (Mother-infant bonding)',
+      'รู้สึกว่าสามารถดูแลบุตรได้ด้วยตนเองมากขึ้น (Parental empowerment)',
+      'จะแนะนำโปรแกรมสองไฟที่บ้านให้ผู้ที่อยู่ในสถานการณ์เดียวกัน',
+      'ความพึงพอใจโดยรวมต่อโปรแกรม Home Phototherapy',
+    ],
+    qStart: 19
+  },
+  {
+    id: 'nps',
+    title: 'คะแนนและข้อเสนอแนะ',
+    icon: '💬',
+    type: 'nps'
+  }
+];
+
+// ═══════════════════════════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════════════════════════
+let currentStep = 0;
+const totalSteps = SECTIONS.length;
+const answers = {}; // q1..q24, nps, info fields
+
+function getScriptUrl() {
+  return localStorage.getItem('gasUrl') || '';
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// RENDER ENGINE
+// ═══════════════════════════════════════════════════════════════════════════
+function render() {
+  const sec = SECTIONS[currentStep];
+  const pct = Math.round((currentStep / (totalSteps - 1)) * 100);
+  document.getElementById('progressBar').style.width = pct + '%';
+  updateStepDots();
+
+  const main = document.getElementById('mainContent');
+  main.innerHTML = '';
+
+  if (currentStep === 0) {
+    renderWelcome(main);
+  } else if (sec.type === 'info') {
+    renderInfo(main);
+  } else if (sec.type === 'nps') {
+    renderNPS(main);
+  } else {
+    renderLikert(main, sec);
+  }
+
+  renderNav();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function renderWelcome(el) {
+  const scriptSet = getScriptUrl() ? '' : `
+    <div class="settings-banner">
+      <span>⚠️</span>
+      <div><strong>ยังไม่ได้ตั้งค่า Google Sheets</strong><br>
+      กดปุ่ม ⚙️ ด้านบนขวาเพื่อใส่ URL ของ Apps Script ก่อนเริ่มใช้งานจริง</div>
+    </div>`;
+
+  el.innerHTML = `
+    <div class="info-hero">
+      <div class="info-hero-icon">🌈</div>
+      <div class="info-hero-title">แบบสอบถามความพึงพอใจ</div>
+      <div class="info-hero-sub">โปรแกรมสองไฟรักษาภาวะตัวเหลืองที่บ้าน<br>(Home Phototherapy)</div>
+      <div class="info-badge">🏥 โรงพยาบาลรามาธิบดีจักรีนฤบดินทร์</div>
+    </div>
+
+    <div class="info-grid">
+      <div class="info-item">
+        <div class="info-item-num">24</div>
+        <div class="info-item-label">คำถาม</div>
+      </div>
+      <div class="info-item">
+        <div class="info-item-num">5</div>
+        <div class="info-item-label">ด้านการประเมิน</div>
+      </div>
+      <div class="info-item">
+        <div class="info-item-num">~5</div>
+        <div class="info-item-label">นาที</div>
+      </div>
+      <div class="info-item">
+        <div class="info-item-num">100%</div>
+        <div class="info-item-label">เป็นความลับ</div>
+      </div>
+    </div>
+
+    ${scriptSet}
+
+    <div class="privacy-box">
+      <span>🔒</span>
+      <div>คำตอบของท่านจะถูกเก็บเป็นความลับและนำไปใช้เพื่อพัฒนาคุณภาพบริการเท่านั้น ไม่มีผลต่อการรักษาบุตรหลานของท่านแต่อย่างใด</div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-header-icon">📊</div>
+        <div>
+          <div class="card-header-title">เกณฑ์การให้คะแนน</div>
+          <div class="card-header-sub">5 ระดับ แตะเลือกระดับที่ตรงกับความรู้สึกของท่าน</div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:6px;text-align:center">
+          ${[1,2,3,4,5].map(i=>`
+            <div>
+              <div style="width:40px;height:40px;border-radius:50%;background:var(--r${i});
+                display:flex;align-items:center;justify-content:center;
+                font-size:18px;margin:0 auto 4px;">${LIKERT_EMOJI[i-1]}</div>
+              <div style="font-size:11px;font-weight:700;color:var(--gray-600)">${i}</div>
+              <div style="font-size:10px;color:var(--gray-400)">${LIKERT_LABELS[i-1]}</div>
+            </div>`).join('')}
+        </div>
+      </div>
+    </div>`;
+
+  document.getElementById('navInner').innerHTML = `
+    <button class="btn btn-primary" onclick="next()">เริ่มทำแบบสอบถาม →</button>`;
+}
+
+function renderInfo(el) {
+  el.innerHTML = `
+    <div class="card">
+      <div class="card-header">
+        <div class="card-header-icon">👤</div>
+        <div>
+          <div class="card-header-title">ข้อมูลทั่วไป</div>
+          <div class="card-header-sub">กรุณากรอกข้อมูลให้ครบถ้วน</div>
+        </div>
+      </div>
+      <div class="card-body">
+
+
+        <div class="field-group">
+          <label class="field-label">ความสัมพันธ์กับทารก <span class="req">*</span></label>
+          <div class="radio-group">
+            ${['มารดา','บิดา','ปู่/ย่า/ตา/ยาย','ผู้ดูแล'].map(v=>`
+              <div class="radio-btn ${answers.relation===v?'selected':''}"
+                onclick="selectRadio('relation','${v}',this)">${v}</div>`).join('')}
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label class="field-label">อายุทารก (วัน) <span class="req">*</span></label>
+          <input type="number" class="field-input" id="f_babyAge" placeholder="เช่น 5"
+            value="${answers.babyAge||''}" min="1" max="90">
+        </div>
+
+        <div class="field-group">
+          <label class="field-label">ระยะเวลาสองไฟที่บ้าน <span class="req">*</span></label>
+          <div class="radio-group">
+            ${['1 วัน','2 วัน','3 วันขึ้นไป'].map(v=>`
+              <div class="radio-btn ${answers.ptDays===v?'selected':''}"
+                onclick="selectRadio('ptDays','${v}',this)">${v}</div>`).join('')}
+          </div>
+        </div>
+      </div>
+    </div>`;
+}
+
+function renderLikert(el, sec) {
+  const html = `
+    <div class="card">
+      <div class="card-header">
+        <div class="card-header-icon">${sec.icon}</div>
+        <div>
+          <div class="card-header-title">ด้านที่ ${currentStep - 1}: ${sec.title}</div>
+          <div class="card-header-sub">${sec.questions.length} คำถาม · กรุณาตอบทุกข้อ</div>
+        </div>
+      </div>
+      <div class="card-body" id="likertBody">
+        ${sec.questions.map((q, qi) => {
+          const qNum = sec.qStart + qi;
+          const val = answers['q'+qNum];
+          return `
+            <div class="question-block" id="qblock_${qNum}" data-q="${qNum}">
+              <div class="question-text">
+                <span class="question-num">${qNum}</span>${q}
+              </div>
+              <div class="likert-row">
+                ${[1,2,3,4,5].map(s=>`
+                  <button class="likert-btn s${s} ${val===s?'sel':''}"
+                    onclick="selectLikert(${qNum},${s},this.parentNode)">
+                    <span class="l-num">${s}</span>
+                    <span class="l-txt">${LIKERT_EMOJI[s-1]}</span>
+                  </button>`).join('')}
+              </div>
+              <div class="likert-labels">
+                <span>ไม่พอใจ</span><span>ดีมาก</span>
+              </div>
+            </div>`;
+        }).join('')}
+      </div>
+    </div>`;
+  el.innerHTML = html;
+}
+
+function renderNPS(el) {
+  const npsVal = answers.nps !== undefined ? answers.nps : -1;
+  el.innerHTML = `
+    <div class="card">
+      <div class="card-header">
+        <div class="card-header-icon">💬</div>
+        <div>
+          <div class="card-header-title">คะแนนโดยรวมและข้อเสนอแนะ</div>
+          <div class="card-header-sub">ส่วนสุดท้าย · ใกล้เสร็จแล้ว!</div>
+        </div>
+      </div>
+      <div class="card-body">
+
+        <div class="field-group">
+          <label class="field-label">คะแนนความพึงพอใจโดยรวม (NPS) <span class="req">*</span></label>
+          <div style="font-size:13px;color:var(--gray-400);margin-bottom:10px;">0 = ไม่พอใจเลย &nbsp;·&nbsp; 10 = พอใจอย่างยิ่ง</div>
+          <div class="nps-row" id="npsRow">
+            ${Array.from({length:11},(_,i)=>{
+              const cls = i<=6?'nps-low':i<=8?'nps-mid':'nps-high';
+              const sel = npsVal===i?'sel':'';
+              return `<button class="nps-btn ${cls} ${sel}" onclick="selectNPS(${i})">${i}</button>`;
+            }).join('')}
+          </div>
+          <div class="nps-labels"><span>😞 ไม่แนะนำ</span><span>😊 เป็นกลาง</span><span>🌟 แนะนำ</span></div>
+        </div>
+
+        <div class="field-group" style="margin-top:20px">
+          <label class="field-label">สิ่งที่ท่านพึงพอใจมากที่สุดในโปรแกรมนี้</label>
+          <textarea class="field-input" id="f_goodComment" rows="3"
+            placeholder="เช่น พยาบาลดูแลใส่ใจมาก, เครื่องสองไฟใช้งานง่าย..."
+            oninput="answers.goodComment=this.value">${answers.goodComment||''}</textarea>
+        </div>
+
+        <div class="field-group">
+          <label class="field-label">สิ่งที่ต้องการให้ปรับปรุงหรือพัฒนาเพิ่มเติม</label>
+          <textarea class="field-input" id="f_improveComment" rows="3"
+            placeholder="ข้อเสนอแนะใดๆ ก็ได้..."
+            oninput="answers.improveComment=this.value">${answers.improveComment||''}</textarea>
+        </div>
+
+      </div>
+    </div>`;
+}
+
+function renderNav() {
+  const nav = document.getElementById('navInner');
+  if (currentStep === 0) return; // rendered in welcome
+
+  let backBtn = currentStep > 1
+    ? `<button class="btn btn-secondary" onclick="back()">← ย้อนกลับ</button>` : '';
+
+  const isLast = currentStep === totalSteps - 1;
+  let nextBtn = isLast
+    ? `<button class="btn btn-submit" id="submitBtn" onclick="submitForm()">
+         <span>ส่งแบบสอบถาม</span> <span>✓</span>
+       </button>`
+    : `<button class="btn btn-primary" onclick="next()">ถัดไป →</button>`;
+
+  nav.innerHTML = backBtn + nextBtn;
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// INTERACTIONS
+// ═══════════════════════════════════════════════════════════════════════════
+function selectLikert(qNum, val, row) {
+  answers['q'+qNum] = val;
+  row.querySelectorAll('.likert-btn').forEach((b,i) => {
+    b.classList.toggle('sel', i+1 === val);
+  });
+  const block = document.getElementById('qblock_'+qNum);
+  if (block) block.classList.remove('unanswered');
+}
+
+function selectNPS(val) {
+  answers.nps = val;
+  document.querySelectorAll('.nps-btn').forEach((b,i) => {
+    b.classList.toggle('sel', i === val);
+  });
+}
+
+function selectRadio(field, val, el) {
+  answers[field] = val;
+  el.parentNode.querySelectorAll('.radio-btn').forEach(b => b.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+function next() {
+  if (!validateStep()) return;
+  collectInfoFields();
+  currentStep++;
+  render();
+}
+
+function back() {
+  currentStep--;
+  render();
+}
+
+function validateStep() {
+  // step 0 = welcome page, nothing to validate
+  if (currentStep === 0) return true;
+
+  const sec = SECTIONS[currentStep];
+
+  if (sec.type === 'info') {
+    const age   = document.getElementById('f_babyAge')?.value;
+    if (!answers.relation) { flashError('กรุณาเลือกความสัมพันธ์กับทารก'); return false; }
+    if (!age || isNaN(age) || +age < 1) { flashError('กรุณากรอกอายุทารก'); return false; }
+    if (!answers.ptDays) { flashError('กรุณาเลือกระยะเวลาสองไฟ'); return false; }
+    return true;
+  }
+
+  if (sec.questions) {
+    let allOk = true;
+    for (let i = 0; i < sec.questions.length; i++) {
+      const qNum = sec.qStart + i;
+      const block = document.getElementById('qblock_'+qNum);
+      if (!answers['q'+qNum]) {
+        if (block) block.classList.add('unanswered');
+        allOk = false;
+      }
+    }
+    if (!allOk) { flashError('กรุณาตอบทุกข้อก่อนไปหน้าถัดไป'); return false; }
+    return true;
+  }
+
+  if (sec.type === 'nps') {
+    if (answers.nps === undefined || answers.nps < 0) {
+      flashError('กรุณาเลือกคะแนน NPS (0–10)');
+      return false;
+    }
+    answers.goodComment    = document.getElementById('f_goodComment')?.value || '';
+    answers.improveComment = document.getElementById('f_improveComment')?.value || '';
+    return true;
+  }
+
+  return true;
+}
+
+function collectInfoFields() {
+  if (SECTIONS[currentStep].type === 'info') {
+    // Auto-set date from system
+    const _now = new Date();
+    answers.date = _now.toLocaleDateString('th-TH', {day:'2-digit',month:'2-digit',year:'numeric'});
+    answers.babyAge = document.getElementById('f_babyAge')?.value || '';
+  }
+}
+
+function flashError(msg) {
+  let banner = document.getElementById('errBanner');
+  if (banner) banner.remove();
+  banner = document.createElement('div');
+  banner.id = 'errBanner';
+  banner.className = 'error-banner';
+  banner.innerHTML = `<span>⚠️</span><span>${msg}</span>`;
+  document.getElementById('mainContent').prepend(banner);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  setTimeout(() => banner?.remove(), 4000);
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// STEP DOTS
+// ═══════════════════════════════════════════════════════════════════════════
+function buildStepDots() {
+  const bar = document.createElement('div');
+  bar.className = 'step-indicator';
+  bar.id = 'stepDots';
+  SECTIONS.forEach((s, i) => {
+    const dot = document.createElement('div');
+    dot.className = 'step-dot';
+    dot.textContent = i + 1;
+    dot.id = 'dot_'+i;
+    bar.appendChild(dot);
+    if (i < SECTIONS.length - 1) {
+      const line = document.createElement('div');
+      line.className = 'step-line';
+      line.id = 'line_'+i;
+      bar.appendChild(line);
+    }
+  });
+  document.getElementById('mainContent').before(bar);
+}
+
+function updateStepDots() {
+  SECTIONS.forEach((_, i) => {
+    const dot = document.getElementById('dot_'+i);
+    const line = document.getElementById('line_'+i);
+    if (!dot) return;
+    dot.classList.remove('active','done');
+    if (i < currentStep) dot.classList.add('done'), dot.textContent = '✓';
+    else if (i === currentStep) dot.classList.add('active'), dot.textContent = i+1;
+    else dot.textContent = i+1;
+    if (line) line.classList.toggle('done', i < currentStep);
+  });
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// SUBMIT
+// ═══════════════════════════════════════════════════════════════════════════
+async function submitForm() {
+  if (!validateStep()) return;
+  answers.goodComment    = document.getElementById('f_goodComment')?.value || '';
+  answers.improveComment = document.getElementById('f_improveComment')?.value || '';
+
+  const btn = document.getElementById('submitBtn');
+  if (btn) { btn.disabled = true; btn.innerHTML = '<div class="spinner"></div><span>กำลังส่งข้อมูล...</span>'; }
+
+  // Calc avg score
+  const qNums = Array.from({length:24}, (_,i) => 'q'+(i+1));
+  const vals = qNums.map(k => answers[k]).filter(v => v && !isNaN(v));
+  const avg = vals.length ? (vals.reduce((a,b)=>a+b,0)/vals.length).toFixed(2) : '0';
+
+  const refNo = 'HPT-' + new Date().getFullYear() + '-' + String(Date.now()).slice(-6);
+
+  const payload = {
+    refNo,
+    date:    answers.date,
+    relation: answers.relation || '',
+    babyAge:  answers.babyAge || '',
+    ptDays:   answers.ptDays || '',
+    ...Object.fromEntries(qNums.map(k => [k, answers[k]||''])),
+    nps:     answers.nps !== undefined ? answers.nps : '',
+    goodComment:    answers.goodComment,
+    improveComment: answers.improveComment,
+    avgScore: avg
+  };
+
+  const url = getScriptUrl();
+
+  if (!url) {
+    // Offline mode - save locally and show success
+    saveLocalRecord(payload);
+    showSuccess(refNo, avg, true);
+    return;
+  }
+
+  try {
+    // Use hidden iframe form POST — works cross-origin without CORS
+    await submitViaIframe(url, payload);
+    saveLocalRecord(payload);
+    showSuccess(refNo, avg, false);
+  } catch (err) {
+    saveLocalRecord(payload);
+    showSuccess(refNo, avg, true);
+  }
+}
+
+function submitViaIframe(url, payload) {
+  return new Promise((resolve) => {
+    // Build query string — GAS doGet handles URL params reliably cross-origin
+    const params = new URLSearchParams();
+    Object.entries(payload).forEach(([k,v]) => params.append(k, v ?? ''));
+    const fullUrl = url + '?' + params.toString();
+
+    const iframe = document.createElement('iframe');
+    iframe.style.display = 'none';
+    iframe.name = 'gas_iframe_' + Date.now();
+    document.body.appendChild(iframe);
+
+    const form = document.createElement('form');
+    form.method = 'POST';
+    form.action = url;
+    form.target = iframe.name;
+    form.style.display = 'none';
+
+    // Add each field as hidden input
+    Object.entries(payload).forEach(([k,v]) => {
+      const input = document.createElement('input');
+      input.type = 'hidden';
+      input.name = k;
+      input.value = v ?? '';
+      form.appendChild(input);
+    });
+
+    document.body.appendChild(form);
+
+    iframe.onload = () => {
+      setTimeout(() => {
+        form.remove();
+        iframe.remove();
+      }, 1000);
+      resolve();
+    };
+
+    // Fallback resolve after 5s
+    setTimeout(() => resolve(), 5000);
+    form.submit();
+  });
+}
+
+function saveLocalRecord(payload) {
+  try {
+    const key = 'hpt_survey_' + Date.now();
+    localStorage.setItem(key, JSON.stringify(payload));
+  } catch(e) {}
+}
+
+function showSuccess(refNo, avg, offline) {
+  document.getElementById('navBar').style.display = 'none';
+  document.getElementById('mainContent').innerHTML = `
+    <div class="success-screen">
+      <div class="success-icon">🌟</div>
+      <div class="success-title">ขอบคุณอย่างยิ่ง!</div>
+      <div class="success-sub">
+        ${offline
+          ? '<span style="color:var(--gold);font-weight:600">⚠️ บันทึกข้อมูลไว้ในเครื่อง</span><br>(ยังไม่ได้ตั้งค่า Google Sheets URL)<br><br>'
+          : ''}
+        ทีมพยาบาลโปรแกรม Home Phototherapy<br>
+        ขอบคุณที่สละเวลาให้ข้อมูลเพื่อพัฒนาบริการ<br>
+        คำตอบของท่านมีคุณค่าอย่างยิ่งต่อเราทุกคน
+      </div>
+
+      <div class="success-ref">
+        <div style="font-size:11px;color:var(--gray-400);margin-bottom:4px">หมายเลขอ้างอิง</div>
+        <div style="font-size:18px;font-weight:700;color:var(--navy);letter-spacing:1px">${refNo}</div>
+        <div style="font-size:13px;color:var(--gray-600);margin-top:6px">
+          คะแนนเฉลี่ยของท่าน: <strong style="color:var(--teal)">${avg} / 5.00</strong>
+        </div>
+      </div>
+
+      <div style="background:var(--sky);border-radius:var(--radius-sm);padding:14px 16px;margin-top:16px;text-align:left">
+        <div style="font-size:13px;font-weight:700;color:var(--navy);margin-bottom:6px">📞 ติดต่อโปรแกรม Home Phototherapy</div>
+        <div style="font-size:13px;color:var(--gray-600)">
+          โทร. <strong>02-839-6870</strong> ตลอด 24 ชั่วโมง<br>
+          Line: @CNPHOTO · nicu4e1.cnmi@gmail.com
+        </div>
+      </div>
+
+      <button class="btn-restart" onclick="restartSurvey()">ทำแบบสอบถามใหม่</button>
+    </div>`;
+  document.getElementById('stepDots').style.display = 'none';
+}
+
+function restartSurvey() {
+  currentStep = 0;
+  Object.keys(answers).forEach(k => delete answers[k]);
+  document.getElementById('navBar').style.display = '';
+  document.getElementById('stepDots').style.display = '';
+  render();
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// CONFIG MODAL
+// ═══════════════════════════════════════════════════════════════════════════
+function openConfig() {
+  document.getElementById('scriptUrlInput').value = getScriptUrl();
+  document.getElementById('configModal').style.display = 'flex';
+}
+function closeConfig() {
+  document.getElementById('configModal').style.display = 'none';
+}
+function saveConfig() {
+  const url = document.getElementById('scriptUrlInput').value.trim();
+  if (url) {
+    localStorage.setItem('gasUrl', url);
+    closeConfig();
+    showToast('บันทึก URL เรียบร้อยแล้ว ✓');
+  } else {
+    localStorage.removeItem('gasUrl');
+    closeConfig();
+    showToast('ล้าง URL แล้ว (โหมด offline)');
+  }
+  render();
+}
+
+function showToast(msg) {
+  const t = document.createElement('div');
+  t.style.cssText = 'position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:#1E293B;color:white;padding:10px 20px;border-radius:20px;font-size:14px;z-index:999;white-space:nowrap;box-shadow:var(--shadow-md)';
+  t.textContent = msg;
+  document.body.appendChild(t);
+  setTimeout(() => t.remove(), 2500);
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════════════════════════════
+window.addEventListener('DOMContentLoaded', () => {
+  buildStepDots();
+  render();
+});
+</script>
+</body>
+</html>
